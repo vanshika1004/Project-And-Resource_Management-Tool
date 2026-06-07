@@ -7,4 +7,12 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Storage\" />
+    <Folder Include="ApiClients\" />
+    <Folder Include="Screens\Admin\" />
+    <Folder Include="Screens\Manager\" />
+    <Folder Include="Screens\Employee\" />
+  </ItemGroup>
+
 </Project>
