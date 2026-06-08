@@ -22,8 +22,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+builder.Services.AddScoped<IEmployeeSkillRepository, EmployeeSkillRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IMilestoneRepository, MilestoneRepository>();
+
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<ISkillService, SkillService>();
+builder.Services.AddScoped<IEmployeeSkillService, EmployeeSkillService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IMilestoneService, MilestoneService>();
 
 var app = builder.Build();
 
@@ -39,13 +50,32 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+//using (var scope = app.Services.CreateScope())
+//{
+//    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+//    await db.Database.MigrateAsync();
+
+//    await DbInitializer.SeedAdminAsync(db);
+//}
+
 using (var scope = app.Services.CreateScope())
 {
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    try
+    {
+        var db = scope.ServiceProvider
+            .GetRequiredService<ApplicationDbContext>();
 
-    await db.Database.MigrateAsync();
+        await db.Database.MigrateAsync();
 
-    await DbInitializer.SeedAdminAsync(db);
+        await DbInitializer.SeedAdminAsync(db);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+
+        throw;
+    }
 }
 
 app.Run();

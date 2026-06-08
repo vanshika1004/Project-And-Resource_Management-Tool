@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Application.DTOs.Employee;
 
-namespace Application.Interfaces.Services
+namespace Application.Interfaces.Services;
+
+public interface IEmployeeService
 {
-    internal class IEmployeeService
-    {
-    }
+    Task<List<EmployeeDto>> GetAllAsync();
+
+    Task<EmployeeDto?> GetByIdAsync(int employeeId);
+
+    Task UpdateAsync(int employeeId, UpdateEmployeeRequestDto request);
 }

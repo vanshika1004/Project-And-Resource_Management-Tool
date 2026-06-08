@@ -1,0 +1,14 @@
+﻿using Domain.Enums;
+
+namespace Application.DTOs.Employee;
+
+public class UpdateEmployeeRequestDto
+{
+    public string Department { get; set; } = string.Empty;
+
+    public string Designation { get; set; } = string.Empty;
+
+    public int? ManagerId { get; set; }
+
+    public EmployeeStatus Status { get; set; }
+}

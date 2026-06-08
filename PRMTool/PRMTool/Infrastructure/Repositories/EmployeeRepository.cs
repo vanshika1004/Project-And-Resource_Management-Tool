@@ -36,6 +36,11 @@ public class EmployeeRepository : IEmployeeRepository
         _context.Employees.Update(employee);
     }
 
+    public async Task<List<Employee>> GetAllAsync()
+    {
+        return await _context.Employees
+            .ToListAsync();
+    }
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
