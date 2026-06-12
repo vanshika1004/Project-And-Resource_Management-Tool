@@ -1,10 +1,12 @@
-﻿using Application.DTOs.Skill;
+using Application.DTOs.Skill;
 using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class EmployeeSkillsController : ControllerBase
 {
@@ -41,5 +43,13 @@ public class EmployeeSkillsController : ControllerBase
         await _employeeSkillService.UpdateProficiencyAsync(id, request);
 
         return Ok("Proficiency updated successfully.");
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> RemoveSkill(int id)
+    {
+        await _employeeSkillService.RemoveSkillAsync(id);
+
+        return Ok("Skill removed successfully.");
     }
 }

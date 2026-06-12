@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Employee;
+namespace Application.DTOs.Employee;
 
 public class EmployeeDto
 {
@@ -13,4 +13,8 @@ public class EmployeeDto
     public int? ManagerId { get; set; }
 
     public string Status { get; set; } = string.Empty;
+
+    public int UserId { get; set; }
+
+    public bool IsActive { get; set; }
 }

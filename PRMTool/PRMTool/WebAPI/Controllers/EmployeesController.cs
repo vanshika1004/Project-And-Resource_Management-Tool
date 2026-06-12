@@ -1,18 +1,24 @@
-﻿using Application.DTOs.Employee;
+using Application.DTOs.Employee;
 using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class EmployeesController : ControllerBase
 {
     private readonly IEmployeeService _employeeService;
+    private readonly Application.Interfaces.Repositories.IEmployeeRepository _employeeRepository;
 
-    public EmployeesController(IEmployeeService employeeService)
+    public EmployeesController(
+        IEmployeeService employeeService,
+        Application.Interfaces.Repositories.IEmployeeRepository employeeRepository)
     {
         _employeeService = employeeService;
+        _employeeRepository = employeeRepository;
     }
 
     [HttpGet]
@@ -21,6 +27,23 @@ public class EmployeesController : ControllerBase
         var employees = await _employeeService.GetAllAsync();
 
         return Ok(employees);
+    }
+
+    [HttpGet("team")]
+    public async Task<IActionResult> GetMyTeam()
+    {
+        var userIdStr = User.Claims.FirstOrDefault(c => c.Type == "UserId")?.Value;
+        if (int.TryParse(userIdStr, out var userId))
+        {
+            var emp = await _employeeRepository.GetByUserIdAsync(userId);
+            if (emp != null)
+            {
+                var employees = await _employeeService.GetAllAsync();
+                var team = employees.Where(e => e.ManagerId == emp.Id).ToList();
+                return Ok(team);
+            }
+        }
+        return BadRequest("Unable to identify manager.");
     }
 
     [HttpGet("{id}")]

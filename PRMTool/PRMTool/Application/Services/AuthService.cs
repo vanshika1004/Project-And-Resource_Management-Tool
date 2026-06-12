@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Auth;
+using Application.DTOs.Auth;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using BCrypt.Net;
@@ -22,6 +22,8 @@ public class AuthService : IAuthService
 
         if (user == null) throw new Exception("Invalid username or password.");
 
+        if (!user.IsActive) throw new Exception("Account is deactivated. Contact your administrator.");
+
         var passwordValid = BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash);
 
         if (!passwordValid) throw new Exception("Invalid username or password.");
@@ -32,7 +34,9 @@ public class AuthService : IAuthService
         {
             Token = token,
             Username = user.Username,
+            FullName = user.FullName,
             Role = user.Role.ToString(),
+            UserId = user.Id,
             ForcePasswordChange = user.ForcePasswordChange
         };
     }

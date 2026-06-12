@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Employee;
+using Application.DTOs.Employee;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Entities;
@@ -26,27 +26,30 @@ public class EmployeeService : IEmployeeService
             Department = e.Department,
             Designation = e.Designation,
             ManagerId = e.ManagerId,
-            Status = e.Status.ToString()
+            Status = e.Status.ToString(),
+            IsActive = e.IsActive,
+            UserId = e.UserId
         }).ToList();
     }
 
     public async Task<EmployeeDto?> GetByIdAsync(
         int employeeId)
     {
-        var employee =
-            await _employeeRepository.GetByIdAsync(employeeId);
+        var e = await _employeeRepository.GetByIdAsync(employeeId);
 
-        if (employee == null)
+        if (e == null)
             return null;
 
         return new EmployeeDto
         {
-            Id = employee.Id,
-            FullName = employee.FullName,
-            Department = employee.Department,
-            Designation = employee.Designation,
-            ManagerId = employee.ManagerId,
-            Status = employee.Status.ToString()
+            Id = e.Id,
+            FullName = e.FullName,
+            Department = e.Department,
+            Designation = e.Designation,
+            ManagerId = e.ManagerId,
+            Status = e.Status.ToString(),
+            IsActive = e.IsActive,
+            UserId = e.UserId
         };
     }
 
@@ -62,10 +65,12 @@ public class EmployeeService : IEmployeeService
             throw new Exception("Employee not found.");
         }
 
+        employee.FullName = request.FullName;
         employee.Department = request.Department;
         employee.Designation = request.Designation;
         employee.ManagerId = request.ManagerId;
         employee.Status = request.Status;
+        employee.IsActive = request.IsActive;
 
         _employeeRepository.Update(employee);
 

@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Project;
+namespace Application.DTOs.Project;
 
 public class ProjectDto
 {
@@ -19,4 +19,8 @@ public class ProjectDto
     public string HealthStatus { get; set; } = string.Empty;
 
     public int TotalStoryPoints { get; set; }
+
+    public string ManagerName { get; set; } = string.Empty;
+
+    public int StoryPointsCompleted { get; set; }
 }

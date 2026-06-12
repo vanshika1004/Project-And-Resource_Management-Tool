@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Project;
+namespace Application.DTOs.Project;
 
 public class CreateProjectRequestDto
 {
@@ -11,4 +11,6 @@ public class CreateProjectRequestDto
     public DateTime StartDate { get; set; }
 
     public DateTime EndDate { get; set; }
+
+    public int TotalStoryPoints { get; set; }
 }

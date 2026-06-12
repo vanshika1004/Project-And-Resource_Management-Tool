@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Repositories;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +16,12 @@ public class ProjectRepository : IProjectRepository
 
     public async Task<List<Project>> GetAllAsync()
     {
-        return await _context.Projects.Include(p => p.Manager).ToListAsync();
+        return await _context.Projects.Include(p => p.Manager).Include(p => p.Milestones).ToListAsync();
     }
 
     public async Task<Project?> GetByIdAsync(int id)
     {
-        return await _context.Projects.Include(p => p.Manager).FirstOrDefaultAsync(p => p.Id == id);
+        return await _context.Projects.Include(p => p.Manager).Include(p => p.Milestones).FirstOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task AddAsync(Project project)
@@ -34,6 +34,12 @@ public class ProjectRepository : IProjectRepository
         _context.Projects.Update(project);
     }
 
+    public async Task<Project?> GetProjectWithMilestonesAsync(int projectId)
+    {
+        return await _context.Projects
+            .Include(p => p.Milestones)
+            .FirstOrDefaultAsync(p => p.Id == projectId);
+    }
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();

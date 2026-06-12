@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Interfaces.Repositories;
 
@@ -11,6 +11,8 @@ public interface IEmployeeSkillRepository
     Task AddAsync(EmployeeSkill employeeSkill);
 
     void Update(EmployeeSkill employeeSkill);
+
+    void Delete(EmployeeSkill employeeSkill);
 
     Task SaveChangesAsync();
 }

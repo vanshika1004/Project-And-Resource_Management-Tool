@@ -1,10 +1,12 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 
 namespace Application.Interfaces.Repositories;
 
 public interface IUserRepository
 {
     Task<User?> GetByIdAsync(int id);
+
+    Task<List<User>> GetAllAsync();
 
     Task<User?> GetByUsernameAsync(string username);
 

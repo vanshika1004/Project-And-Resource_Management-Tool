@@ -1,10 +1,12 @@
-﻿using Application.DTOs.Skill;
+using Application.DTOs.Skill;
 using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class SkillsController : ControllerBase
 {

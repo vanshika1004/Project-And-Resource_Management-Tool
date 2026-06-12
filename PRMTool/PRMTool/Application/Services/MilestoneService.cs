@@ -47,8 +47,7 @@ public class MilestoneService : IMilestoneService
         return milestone.Id;
     }
 
-    public async Task<List<MilestoneDto>>
-        GetByProjectIdAsync(int projectId)
+    public async Task<List<MilestoneDto>> GetByProjectIdAsync(int projectId)
     {
         var milestones = await _milestoneRepository.GetByProjectIdAsync(projectId);
 
@@ -61,5 +60,24 @@ public class MilestoneService : IMilestoneService
             StoryPoints = m.StoryPoints,
             Status = m.Status.ToString()
         }).ToList();
+    }
+
+    public async Task UpdateMilestoneAsync(int milestoneId, UpdateMilestoneRequestDto request)
+    {
+        var milestone = await _milestoneRepository.GetByIdAsync(milestoneId);
+
+        if (milestone == null)
+        {
+            throw new Exception("Milestone not found.");
+        }
+
+        milestone.Title = request.Title;
+        milestone.DueDate = request.DueDate;
+        milestone.StoryPoints = request.StoryPoints;
+        milestone.Status = request.Status;
+
+        _milestoneRepository.Update(milestone);
+
+        await _milestoneRepository.SaveChangesAsync();
     }
 }

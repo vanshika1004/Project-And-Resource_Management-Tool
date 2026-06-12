@@ -9,4 +9,7 @@ public interface IProjectService
     Task<List<ProjectDto>> GetAllAsync();
 
     Task<ProjectDto?> GetByIdAsync(int projectId);
+
+    Task UpdateProjectAsync(int projectId, UpdateProjectRequestDto request);
+    Task<ProjectProgressDto> GetProjectProgressAsync(int projectId);
 }

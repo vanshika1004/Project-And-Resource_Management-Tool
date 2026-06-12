@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Skill;
+using Application.DTOs.Skill;
 
 namespace Application.Interfaces.Services;
 
@@ -9,4 +9,6 @@ public interface IEmployeeSkillService
     Task<List<EmployeeSkillDto>> GetEmployeeSkillsAsync(int employeeId);
 
     Task UpdateProficiencyAsync(int employeeSkillId, UpdateEmployeeSkillRequestDto request);
+
+    Task RemoveSkillAsync(int employeeSkillId);
 }

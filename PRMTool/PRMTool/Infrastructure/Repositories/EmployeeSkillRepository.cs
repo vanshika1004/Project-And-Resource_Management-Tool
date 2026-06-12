@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Repositories;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -43,5 +43,10 @@ public class EmployeeSkillRepository : IEmployeeSkillRepository
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
+    }
+
+    public void Delete(EmployeeSkill employeeSkill)
+    {
+        _context.EmployeeSkills.Remove(employeeSkill);
     }
 }

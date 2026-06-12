@@ -1,10 +1,12 @@
-﻿using Application.DTOs.Project;
+using Application.DTOs.Project;
 using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPI.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("api/[controller]")]
 public class MilestonesController : ControllerBase
 {
@@ -40,5 +42,22 @@ public class MilestonesController : ControllerBase
         var milestones = await _milestoneService.GetByProjectIdAsync(projectId);
 
         return Ok(milestones);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateMilestone(int id, UpdateMilestoneRequestDto request)
+    {
+        try
+        {
+            await _milestoneService.UpdateMilestoneAsync(
+                id,
+                request);
+
+            return Ok("Milestone updated successfully.");
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }

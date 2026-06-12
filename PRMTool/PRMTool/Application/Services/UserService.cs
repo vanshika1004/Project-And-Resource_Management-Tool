@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Auth;
+using Application.DTOs.Auth;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Entities;
@@ -44,7 +44,6 @@ public class UserService : IUserService
 
         await _userRepository.SaveChangesAsync();
 
-        // Manager and Employee get employee profiles
 
         if (request.Role == UserRole.Manager || request.Role == UserRole.Employee)
         {
@@ -64,5 +63,51 @@ public class UserService : IUserService
         }
 
         return user.Id;
+    }
+
+    public async Task<List<UserDto>> GetAllAsync()
+    {
+        var users = await _userRepository.GetAllAsync();
+        return users.Select(u => new UserDto
+        {
+            Id = u.Id,
+            Username = u.Username,
+            Role = u.Role.ToString(),
+            IsActive = u.IsActive
+        }).ToList();
+    }
+
+    public async Task ResetPasswordAsync(int userId, string newTemporaryPassword)
+    {
+        var user = await _userRepository.GetByIdAsync(userId);
+        if (user == null)
+            throw new Exception("User not found.");
+
+        user.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newTemporaryPassword);
+        user.ForcePasswordChange = true;
+        _userRepository.Update(user);
+        await _userRepository.SaveChangesAsync();
+    }
+
+    public async Task DeactivateAsync(int userId)
+    {
+        var user = await _userRepository.GetByIdAsync(userId);
+        if (user == null)
+            throw new Exception("User not found.");
+
+        user.IsActive = false;
+        _userRepository.Update(user);
+        await _userRepository.SaveChangesAsync();
+    }
+
+    public async Task ReactivateAsync(int userId)
+    {
+        var user = await _userRepository.GetByIdAsync(userId);
+        if (user == null)
+            throw new Exception("User not found.");
+
+        user.IsActive = true;
+        _userRepository.Update(user);
+        await _userRepository.SaveChangesAsync();
     }
 }

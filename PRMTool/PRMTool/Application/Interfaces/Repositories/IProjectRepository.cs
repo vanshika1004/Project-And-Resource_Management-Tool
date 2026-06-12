@@ -12,5 +12,6 @@ public interface IProjectRepository
 
     void Update(Project project);
 
+    Task<Project?> GetProjectWithMilestonesAsync(int projectId);
     Task SaveChangesAsync();
 }

@@ -1,4 +1,4 @@
-﻿using Application.Interfaces.Repositories;
+using Application.Interfaces.Repositories;
 using Domain.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +18,11 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users
             .FirstOrDefaultAsync(x => x.Id == id);
+    }
+
+    public async Task<List<User>> GetAllAsync()
+    {
+        return await _context.Users.ToListAsync();
     }
 
     public async Task<User?> GetByUsernameAsync(string username)

@@ -1,4 +1,4 @@
-﻿using Application.DTOs.Skill;
+using Application.DTOs.Skill;
 using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Entities;
@@ -57,6 +57,19 @@ public class EmployeeSkillService : IEmployeeSkillService
 
         _employeeSkillRepository.Update(employeeSkill);
 
+        await _employeeSkillRepository.SaveChangesAsync();
+    }
+
+    public async Task RemoveSkillAsync(int employeeSkillId)
+    {
+        var employeeSkill = await _employeeSkillRepository.GetByIdAsync(employeeSkillId);
+
+        if (employeeSkill == null)
+        {
+            throw new Exception("Employee skill not found.");
+        }
+
+        _employeeSkillRepository.Delete(employeeSkill);
         await _employeeSkillRepository.SaveChangesAsync();
     }
 }
