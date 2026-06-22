@@ -68,7 +68,3 @@ A client-server console application for managing resources (employees), projects
 - **No logic in Controllers**: Controllers validate request format, call service, return response. Period.
 - **Consistent error responses**: Standard `ApiErrorResponse` DTO with StatusCode, Message, Errors[].
 
-## 6. Task Guidelines
-- **Guideline 1: Always Plan Before Implementing**: Create an implementation plan before writing code. Describe what will be built, files affected, DB changes, API endpoints, dependencies, and acceptance criteria. Await explicit approval.
-- **Guideline 2: Clarify Before Assuming**: Never assume business logic, data types, or UI behavior. Refer to BRD and Project_Context.md. Ask questions to resolve ambiguity.
-- **Guideline 3: Minimal Blast Radius**: Only modify files directly related to the task. Get approval before touching shared interfaces or unrelated areas. No out-of-scope refactoring.

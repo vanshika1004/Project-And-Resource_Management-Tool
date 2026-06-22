@@ -73,7 +73,7 @@ public class ManagerController : ControllerBase
     }
 
     [HttpGet("team-dashboard")]
-    [Authorize(Policy = "Projects.ViewTeam")] // Changed to Projects.ViewTeam
+    [Authorize(Policy = "Projects.ViewTeam")] 
     public async Task<IActionResult> GetTeamDashboard([FromServices] IUserService userService)
     {
         var members = await userService.GetTeamDashboardAsync(GetCurrentUserId());
