@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="PRM.API/PRM.API.csproj" />
+  <Project Path="PRM.Application/PRM.Application.csproj" />
+  <Project Path="PRM.Core/PRM.Core.csproj" />
+  <Project Path="PRM.Infrastructure/PRM.Infrastructure.csproj" />
+</Solution>
